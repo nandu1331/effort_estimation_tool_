@@ -1,0 +1,60 @@
+sow_processing_task:
+  description: >
+    Parse the SOW: {sow} using NLP and NER to extract requirements and personas.
+    Store raw data in the database.
+  expected_output: >
+    A JSON object with SOW text, extracted personas, and requirements.
+  agent: sow_processor
+
+requirement_analysis_task:
+  description: >
+    Analyze the SOW: {sow} and map requirements to personas (Customer, Driver, Admin).
+    Use sample SOWs for context.
+  expected_output: >
+    A list of personas with requirement mappings.
+  agent: business_analyst
+
+decomposition_task:
+  description: >
+    Decompose requirements into personas, modules, features, and sub-features,
+    aligning with the Excel structure.
+  expected_output: >
+    A hierarchical JSON structure matching the Excel format.
+  agent: technical_estimator
+
+effort_estimation_task:
+  description: >
+    Estimate efforts for each sub-feature using an ML model trained on historical data.
+    Include UI/UX, Mobile, Backend, Testing, Buffers, and Management efforts.
+  expected_output: >
+    A detailed effort breakdown per sub-feature.
+  agent: technical_estimator
+
+qa_estimation_task:
+  description: >
+    Add testing efforts (15-20% of dev effort) based on complexity and development time.
+  expected_output: >
+    Updated effort breakdown with testing estimates.
+  agent: qa_specialist
+
+aggregation_task:
+  description: >
+    Aggregate efforts at feature, module, and persona levels. Validate against historical data.
+  expected_output: >
+    Aggregated totals and validation report.
+  agent: project_manager
+
+proposal_generation_task:
+  description: >
+    Generate a detailed client proposal with insights, risks, and visualizations.
+  expected_output: >
+    A markdown-formatted proposal.
+  agent: proposal_generator
+
+output_formatting_task:
+  description: >
+    Generate two outputs: an Excel sheet with detailed estimates and a markdown proposal.
+    Store results in the database.
+  expected_output: >
+    Files: 'effort_estimation.xlsx' and 'proposal.md'.
+  agent: output_formatter
